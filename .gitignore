@@ -1,5 +1,6 @@
 node_modules/
 dist/
+!docs/
 *.pyc
 __pycache__/
 *.egg-info/
