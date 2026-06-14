@@ -292,8 +292,8 @@ const getLevelClass = (level) => {
 
 .error-msg { background: #fed7d7; color: #c53030; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; }
 
-.contact-info { text-align: center; margin-bottom: 1rem; color: rgba(255,255,255,0.85); font-size: 0.8rem; }
-.contact-divider { margin: 0 0.5rem; }
+.contact-info { text-align: center; margin-bottom: 1rem; color: #ff4444; font-size: 1rem; font-weight: 700; }
+.contact-divider { margin: 0 0.5rem; color: #ff4444; }
 
 .result-card {
   background: white; padding: 1.5rem;
