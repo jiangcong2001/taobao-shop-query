@@ -45,6 +45,12 @@
 
       <div v-if="error" class="error-msg">{{ error }}</div>
 
+      <div class="contact-info">
+        <span>作者微信：scmsj601</span>
+        <span class="contact-divider">｜</span>
+        <span>联系电话：18582478910</span>
+      </div>
+
       <div v-if="shopData" class="result-card">
         <div class="result-header">
           <h2 class="result-title">查询结果</h2>
@@ -285,6 +291,9 @@ const getLevelClass = (level) => {
 }
 
 .error-msg { background: #fed7d7; color: #c53030; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; }
+
+.contact-info { text-align: center; margin-bottom: 1rem; color: rgba(255,255,255,0.85); font-size: 0.8rem; }
+.contact-divider { margin: 0 0.5rem; }
 
 .result-card {
   background: white; padding: 1.5rem;
