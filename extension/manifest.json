@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "淘宝店铺数据查询",
+  "version": "1.0.0",
+  "description": "在淘宝店铺页面提取粉丝数、保证金、主营类目等完整店铺数据",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "淘宝店铺数据查询",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "permissions": ["activeTab", "storage", "scripting"],
+  "host_permissions": [
+    "https://shop*.taobao.com/*",
+    "https://shop*.tmall.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://shop*.taobao.com/*",
+        "https://shop*.tmall.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

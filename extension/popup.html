@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>淘宝店铺数据查询</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 420px; min-height: 300px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f7f8fa; color: #1a202c; font-size: 13px;
+    }
+    .header {
+      padding: 14px 18px;
+      background: linear-gradient(135deg, #ff6b35, #f08d3a);
+      color: white; text-align: center;
+    }
+    .header h1 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+    .header .sub { font-size: 11px; opacity: 0.9; }
+
+    .tabs {
+      display: flex; background: white; border-bottom: 1px solid #e2e8f0;
+    }
+    .tab {
+      flex: 1; padding: 10px; border: none; background: none;
+      font-size: 12px; font-weight: 600; color: #a0aec0; cursor: pointer;
+      transition: all 0.15s; border-bottom: 2px solid transparent;
+    }
+    .tab.active { color: #ff6b35; border-bottom-color: #ff6b35; }
+
+    .content { padding: 16px 18px; }
+    .empty { text-align: center; padding: 40px 20px; color: #a0aec0; }
+    .empty svg { width: 40px; height: 40px; margin-bottom: 10px; opacity: 0.5; }
+    .empty p { font-size: 13px; line-height: 1.6; }
+    .empty .hint { font-size: 11px; color: #cbd5e0; margin-top: 6px; }
+
+    .section-title {
+      font-weight: 700; font-size: 12px; color: #4a5568;
+      margin: 14px 0 8px; padding-bottom: 4px;
+      border-bottom: 2px solid #ff6b35; text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .section-title:first-child { margin-top: 0; }
+    .section-title.login { color: #e53e3e; border-bottom-color: #fc8181; }
+    .section-title.login span { font-size: 10px; color: #a0aec0; font-weight: 400; margin-left: 4px; }
+
+    .row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 7px 0; border-bottom: 1px solid #edf2f7;
+    }
+    .row:last-child { border-bottom: none; }
+    .row .label { color: #718096; font-size: 12px; }
+    .row .value { font-weight: 600; font-size: 13px; }
+
+    .badge-taobao { color: #ff6b35; }
+    .badge-tmall { color: #e53e3e; }
+    .value-found { color: #38a169; }
+    .value-empty { color: #cbd5e0; font-weight: 400; font-style: italic; }
+
+    .score-row {
+      display: grid; grid-template-columns: 1fr auto auto;
+      gap: 8px; align-items: center; padding: 6px 0;
+      border-bottom: 1px solid #edf2f7;
+    }
+    .score-title { font-size: 12px; color: #718096; }
+    .score-val { font-weight: 700; color: #ff6b35; font-size: 14px; }
+    .score-level { font-size: 11px; }
+    .score-level.higher { color: #38a169; }
+    .score-level.mid { color: #d69e2e; }
+    .score-level.lower { color: #e53e3e; }
+
+    .btn-row { padding: 12px 18px; display: flex; gap: 8px; border-top: 1px solid #e2e8f0; }
+    .btn {
+      flex: 1; padding: 8px;
+      border: none; border-radius: 6px; font-size: 12px;
+      font-weight: 600; cursor: pointer; transition: all 0.15s;
+    }
+    .btn-primary { background: #ff6b35; color: white; }
+    .btn-primary:hover { background: #e55a2b; }
+    .btn-outline { background: white; color: #ff6b35; border: 1px solid #ff6b35; }
+    .btn-outline:hover { background: #fff5f0; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .status { text-align: center; padding: 4px; font-size: 10px; color: #a0aec0; }
+
+    .copy-toast {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: #1a202c; color: white; padding: 8px 20px;
+      border-radius: 6px; font-size: 12px; z-index: 999; opacity: 0;
+      transition: opacity 0.3s; pointer-events: none;
+    }
+    .copy-toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>淘宝店铺数据查询</h1>
+    <div class="sub">店铺完整信息提取工具</div>
+  </div>
+
+  <div class="content" id="content">
+    <div class="empty" id="emptyState">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+      <p>请在淘宝店铺页面<br>点击此图标</p>
+      <p class="hint">支持 shop*.taobao.com / shop*.tmall.com</p>
+    </div>
+    <div id="dataView" style="display:none;"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" id="btnRefresh">重新提取</button>
+    <button class="btn btn-primary" id="btnCopy">复制数据</button>
+  </div>
+  <div class="status" id="statusBar">就绪</div>
+  <div class="copy-toast" id="copyToast">已复制到剪贴板</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
