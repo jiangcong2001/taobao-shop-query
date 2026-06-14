@@ -32,13 +32,19 @@
           <span v-if="cookie" class="cookie-badge">已填写</span>
         </div>
         <div v-if="showCookie" class="cookie-input-area">
+          <div class="cookie-auto-btn" @click="autoGetCookie">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+            </svg>
+            <span>一键获取 Cookie（自动打开淘宝复制）</span>
+          </div>
           <textarea
             v-model="cookie"
-            placeholder="粘贴淘宝登录Cookie，用于查询粉丝数、保证金、主营类目等登录后可见数据。&#10;获取方式：浏览器F12 → Application → Cookies → 复制所有cookie"
+            placeholder="将获取到的 Cookie 粘贴到此处"
             class="cookie-input"
           ></textarea>
           <p class="cookie-hint">
-            提示：Cookie仅用于本次查询，不会存储到服务器。在淘宝页面按F12打开开发者工具，在Application/存储标签中复制Cookie值。
+            点击"一键获取"后，在打开的淘宝页面按提示操作即可自动复制 Cookie。
           </p>
         </div>
       </div>
@@ -178,6 +184,28 @@ const error = ref('')
 const cookie = ref('')
 const showCookie = ref(false)
 
+const autoGetCookie = () => {
+  window.open('https://www.taobao.com')
+  const msg = [
+    ' 一键获取淘宝 Cookie',
+    '',
+    '请按以下步骤操作：',
+    '',
+    '1. 如果未登录，请先登录淘宝账号',
+    '2. 按 F12 打开开发者工具',
+    '3. 点顶部 "Console"（控制台）标签',
+    '4. 粘贴下面这行代码并回车：',
+    '',
+    '   document.cookie',
+    '',
+    '5. 复制控制台输出的全部内容',
+    '6. 回到查询页面粘贴到输入框',
+    '',
+    '（Cookie 有效期约 2 小时）'
+  ].join('\n')
+  setTimeout(() => alert(msg), 1200)
+}
+
 const searchShop = async () => {
   if (!shopName.value.trim()) {
     error.value = '请输入店铺链接或店铺ID'
@@ -279,6 +307,18 @@ const getLevelClass = (level) => {
   border-radius: 10px; margin-left: auto;
 }
 .cookie-input-area { padding: 0 1rem 1rem; }
+.cookie-auto-btn {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+  color: white; border-radius: 6px;
+  cursor: pointer; user-select: none;
+  font-weight: 600; font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.cookie-auto-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4); }
+.cookie-auto-btn svg { flex-shrink: 0; }
 .cookie-input {
   width: 100%; height: 100px; padding: 0.6rem;
   font-size: 0.85rem; font-family: monospace;
